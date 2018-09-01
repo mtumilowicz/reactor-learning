@@ -27,11 +27,11 @@ class FluxBasicFactory {
         return Flux.error(new IllegalStateException());
     }
 
-    static Flux<Long> counterFrom0To9_by100ms() {
+    static Flux<Long> counter_from0To9_by100ms() {
         return Flux.interval(Duration.ofMillis(100)).take(10);
     }
     
-    static Flux<Long> counterFrom10To19_by1s() {
+    static Flux<Long> counter_from10To19_by1s() {
         return Flux.interval(Duration.ofSeconds(1)).skip(10).take(10);
     }
 }

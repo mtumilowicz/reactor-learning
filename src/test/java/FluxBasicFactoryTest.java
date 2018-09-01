@@ -51,16 +51,16 @@ public class FluxBasicFactoryTest {
     }
 
     @Test
-    public void counter_by100ms() {
-        StepVerifier.create(FluxBasicFactory.counterFrom0To9_by100ms())
+    public void counter_from0To9_by100ms() {
+        StepVerifier.create(FluxBasicFactory.counter_from0To9_by100ms())
                 .expectSubscription()
                 .expectNext(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L)
                 .verifyComplete();
     }
     
     @Test
-    public void counterFrom10To20_by1s() {
-        StepVerifier.withVirtualTime(FluxBasicFactory::counterFrom10To19_by1s)
+    public void counter_from10To19_by1s() {
+        StepVerifier.withVirtualTime(FluxBasicFactory::counter_from10To19_by1s)
                 .expectSubscription()
                 .thenAwait(Duration.ofSeconds(20))
                 .expectNextCount(10)
