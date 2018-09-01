@@ -9,15 +9,15 @@ import java.time.Duration;
 public class FluxBasicFactoryTest {
 
     @Test
-    public void emptyFlux() {
-        StepVerifier.create(FluxBasicFactory.emptyFlux())
+    public void empty() {
+        StepVerifier.create(FluxBasicFactory.empty())
                 .expectSubscription()
                 .verifyComplete();
     }
 
     @Test
-    public void neverFlux() {
-        StepVerifier.create(FluxBasicFactory.neverFlux())
+    public void never() {
+        StepVerifier.create(FluxBasicFactory.never())
                 .expectSubscription()
                 .expectNoEvent(Duration.ofSeconds(1))
                 .thenCancel()
@@ -25,8 +25,8 @@ public class FluxBasicFactoryTest {
     }
 
     @Test
-    public void fromValues() {
-        StepVerifier.create(FluxBasicFactory.fromValues())
+    public void just() {
+        StepVerifier.create(FluxBasicFactory.just())
                 .expectSubscription()
                 .expectNext("foo")
                 .expectNext("bar")
@@ -43,24 +43,24 @@ public class FluxBasicFactoryTest {
     }
 
     @Test
-    public void errorFlux() {
-        StepVerifier.create(FluxBasicFactory.errorFlux())
+    public void error() {
+        StepVerifier.create(FluxBasicFactory.error())
                 .expectSubscription()
                 .expectError(IllegalStateException.class)
                 .verify();
     }
 
     @Test
-    public void counter_from0To9_by100ms() {
-        StepVerifier.create(FluxBasicFactory.counter_from0To9_by100ms())
+    public void interval_by100ms_countFrom0To9() {
+        StepVerifier.create(FluxBasicFactory.interval_by100ms_countFrom0To9())
                 .expectSubscription()
                 .expectNext(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L)
                 .verifyComplete();
     }
     
     @Test
-    public void counter_from10To19_by1s() {
-        StepVerifier.withVirtualTime(FluxBasicFactory::counter_from10To19_by1s)
+    public void interval_by1s_countFrom10To19() {
+        StepVerifier.withVirtualTime(FluxBasicFactory::interval_by1s_countFrom10To19)
                 .expectSubscription()
                 .thenAwait(Duration.ofSeconds(20))
                 .expectNextCount(10)

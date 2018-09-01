@@ -7,15 +7,15 @@ import java.util.Arrays;
  * Created by mtumilowicz on 2018-09-01.
  */
 class FluxBasicFactory {
-    static Flux<String> emptyFlux() {
+    static Flux<String> empty() {
         return Flux.empty();
     }
 
-    static Flux<String> neverFlux() {
+    static Flux<String> never() {
         return Flux.never();
     }
     
-    static Flux<String> fromValues() {
+    static Flux<String> just() {
         return Flux.just("foo", "bar");
     }
 
@@ -23,15 +23,15 @@ class FluxBasicFactory {
         return Flux.fromIterable(Arrays.asList("foo", "bar"));
     }
 
-    static Flux<String> errorFlux() {
+    static Flux<String> error() {
         return Flux.error(new IllegalStateException());
     }
 
-    static Flux<Long> counter_from0To9_by100ms() {
+    static Flux<Long> interval_by100ms_countFrom0To9() {
         return Flux.interval(Duration.ofMillis(100)).take(10);
     }
     
-    static Flux<Long> counter_from10To19_by1s() {
+    static Flux<Long> interval_by1s_countFrom10To19() {
         return Flux.interval(Duration.ofSeconds(1)).skip(10).take(10);
     }
 }
