@@ -26,6 +26,12 @@ class FluxBasicFunctions {
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .onErrorResume(err -> Flux.range(3, 3));
     }
+    
+    static Flux<Integer> onErrorMap() {
+        return Flux.range(1, 5)
+                .map(FluxBasicFunctions::doSomethingDangerous)
+                .onErrorMap(err -> new BusinessException(err.getLocalizedMessage()));
+    }
 
     private static int doSomethingDangerous(int i) {
         if (i == 3) {

@@ -44,4 +44,21 @@ public class FluxBasicFunctionsTest {
                 .verifyComplete();
 
     }
+
+    @Test
+    public void onErrorMap() {
+        StepVerifier.create(FluxBasicFunctions.onErrorMap())
+                .expectSubscription()
+                .thenRequest(5)
+                .expectNext(1)
+                .expectNext(2)
+                .expectError(BusinessException.class)
+                .verify();
+
+    }
+
+    @Test
+    public void onErrorMap_sout() {
+        FluxBasicFunctions.onErrorMap().subscribe(System.out::println, System.out::println);
+    }
 }
