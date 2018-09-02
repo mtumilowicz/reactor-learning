@@ -34,4 +34,14 @@ class FluxBasicFactory {
     static Flux<Long> interval_by1s_countFrom10To19() {
         return Flux.interval(Duration.ofSeconds(1)).skip(10).take(10);
     }
+    
+    static Flux<Integer> generate() {
+        return Flux.generate(
+                () -> 0,
+                (state, sink) -> {
+                    sink.next(3*state);
+                    if (state == 10) sink.complete();
+                    return state + 1;
+                });
+    }
 }

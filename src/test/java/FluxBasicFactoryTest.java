@@ -66,4 +66,12 @@ public class FluxBasicFactoryTest {
                 .expectNextCount(10)
                 .verifyComplete();
     }
+    
+    @Test
+    public void generate() {
+        StepVerifier.create(FluxBasicFactory.generate())
+                .expectSubscription()
+                .expectNextCount(11)
+                .verifyComplete();
+    }
 }
