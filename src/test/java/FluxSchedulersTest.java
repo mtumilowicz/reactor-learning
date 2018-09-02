@@ -79,4 +79,25 @@ public class FluxSchedulersTest {
                 .take(5)
                 .blockLast();
     }
+
+    @Test
+    public void publishOn() {
+        Flux.interval(Duration.ofSeconds(1))
+                .publishOn(Schedulers.newSingle("for log"))
+                .log()
+                .publishOn(Schedulers.newSingle("for take"))
+                .take(5)
+                .blockLast();
+    }
+
+    @Test
+    public void subscribeOn() throws InterruptedException {
+        Flux.interval(Duration.ofSeconds(1))
+                .log()
+                .take(5)
+                .subscribeOn(Schedulers.newSingle("subscribeOn"))
+                .subscribe(System.out::println);
+        
+        Thread.sleep(6000);
+    }
 }
