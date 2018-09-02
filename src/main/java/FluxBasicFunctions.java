@@ -15,6 +15,19 @@ class FluxBasicFunctions {
                 });
     }
     
+    static Flux<Integer> handleOnError() {
+        return Flux.range(1, 5)
+                .map(FluxBasicFunctions::doSomethingDangerous)
+                .onErrorReturn(0);
+    }
+    
+    private static int doSomethingDangerous(int i) {
+        if (i == 3) {
+            throw new IllegalStateException("illegal state");
+        }
+        return i;
+    }
+    
     private static Integer transform(Integer i) {
         if (isNull(i) || i % 2 == 0) {
             return null;

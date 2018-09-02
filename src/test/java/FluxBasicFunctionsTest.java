@@ -20,4 +20,16 @@ public class FluxBasicFunctionsTest {
                 .expectNext(9)
                 .verifyComplete();
     }
+    
+    @Test
+    public void handleOnError() {
+        StepVerifier.create(FluxBasicFunctions.handleOnError())
+                .expectSubscription()
+                .thenRequest(3)
+                .expectNext(1)
+                .expectNext(2)
+                .expectNext(0)
+                .verifyComplete();
+                
+    }
 }
