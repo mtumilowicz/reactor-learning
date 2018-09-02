@@ -61,4 +61,18 @@ public class FluxBasicFunctionsTest {
     public void onErrorMap_sout() {
         FluxBasicFunctions.onErrorMap().subscribe(System.out::println, System.out::println);
     }
+    
+    @Test
+    public void retry() {
+        StepVerifier.create(FluxBasicFunctions.retry())
+                .expectSubscription()
+                .thenRequest(6)
+                .expectNext(0)
+                .expectNext(1)
+                .expectNext(2)
+                .expectNext(0)
+                .expectNext(1)
+                .expectNext(2)
+                .verifyError();
+    }
 }

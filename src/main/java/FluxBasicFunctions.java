@@ -32,6 +32,12 @@ class FluxBasicFunctions {
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .onErrorMap(err -> new BusinessException(err.getLocalizedMessage()));
     }
+    
+    static Flux<Integer> retry() {
+        return Flux.range(0, 5)
+                .map(FluxBasicFunctions::doSomethingDangerous)
+                .retry(1);
+    }
 
     private static int doSomethingDangerous(int i) {
         if (i == 3) {
@@ -46,5 +52,10 @@ class FluxBasicFunctions {
         }
         
         return i;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+
+        Thread.sleep(2100);
     }
 }
