@@ -15,7 +15,7 @@ class FluxBasicFunctions {
                 });
     }
     
-    static Flux<Integer> handleOnError() {
+    static Flux<Integer> onErrorReturn() {
         return Flux.range(1, 5)
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .onErrorReturn(0);

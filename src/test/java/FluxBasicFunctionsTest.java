@@ -1,8 +1,6 @@
 import org.junit.Test;
 import reactor.test.StepVerifier;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by mtumilowicz on 2018-09-02.
  */
@@ -22,8 +20,8 @@ public class FluxBasicFunctionsTest {
     }
     
     @Test
-    public void handleOnError() {
-        StepVerifier.create(FluxBasicFunctions.handleOnError())
+    public void onErrorReturn() {
+        StepVerifier.create(FluxBasicFunctions.onErrorReturn())
                 .expectSubscription()
                 .thenRequest(3)
                 .expectNext(1)
