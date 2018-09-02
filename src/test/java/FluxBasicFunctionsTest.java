@@ -30,4 +30,18 @@ public class FluxBasicFunctionsTest {
                 .verifyComplete();
                 
     }
+
+    @Test
+    public void onErrorResume() {
+        StepVerifier.create(FluxBasicFunctions.onErrorResume())
+                .expectSubscription()
+                .thenRequest(5)
+                .expectNext(1)
+                .expectNext(2)
+                .expectNext(3)
+                .expectNext(4)
+                .expectNext(5)
+                .verifyComplete();
+
+    }
 }

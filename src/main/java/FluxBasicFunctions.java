@@ -20,7 +20,13 @@ class FluxBasicFunctions {
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .onErrorReturn(0);
     }
-    
+
+    static Flux<Integer> onErrorResume() {
+        return Flux.range(1, 5)
+                .map(FluxBasicFunctions::doSomethingDangerous)
+                .onErrorResume(err -> Flux.range(3, 3));
+    }
+
     private static int doSomethingDangerous(int i) {
         if (i == 3) {
             throw new IllegalStateException("illegal state");
