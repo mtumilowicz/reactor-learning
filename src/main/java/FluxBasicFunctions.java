@@ -1,4 +1,5 @@
 import reactor.core.publisher.Flux;
+import reactor.util.function.Tuple2;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -37,6 +38,13 @@ class FluxBasicFunctions {
         return Flux.range(0, 5)
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .retry(1);
+    }
+    
+    static Flux<Tuple2<Integer, Integer>> zip() {
+        Flux<Integer> first = Flux.range(1, 5);
+        Flux<Integer> second = Flux.range(6, 5);
+
+        return Flux.zip(first, second);
     }
 
     private static int doSomethingDangerous(int i) {
