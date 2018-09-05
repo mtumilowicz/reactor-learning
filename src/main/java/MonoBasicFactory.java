@@ -1,5 +1,7 @@
 import reactor.core.publisher.Mono;
 
+import java.io.Serializable;
+import java.time.Duration;
 import java.util.Optional;
 
 /**
@@ -39,5 +41,14 @@ class MonoBasicFactory {
 
     static Mono<String> error() {
         return Mono.error(new IllegalStateException());
+    }
+    
+    static Mono<String> first() {
+        return Mono.first(Mono.just("slower").delayElement(Duration.ofSeconds(1)), Mono.just("faster"));
+    }
+
+    public static void main(String[] args) {
+        Mono<? extends Serializable> first = Mono.first(Mono.delay(Duration.ofSeconds(1)), Mono.just("faster"));
+        System.out.println(first.block());
     }
 }

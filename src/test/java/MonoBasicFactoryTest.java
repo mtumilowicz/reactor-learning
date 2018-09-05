@@ -65,4 +65,12 @@ public class MonoBasicFactoryTest {
                 .expectError(IllegalStateException.class)
                 .verify();
     }
+    
+    @Test
+    public void first() {
+        StepVerifier.create(MonoBasicFactory.first())
+                .expectSubscription()
+                .expectNext("faster")
+                .verifyComplete();
+    }
 }
