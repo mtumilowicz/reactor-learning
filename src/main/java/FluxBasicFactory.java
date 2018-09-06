@@ -56,4 +56,11 @@ class FluxBasicFactory {
     static Flux<String> merge() {
         return Flux.merge(Flux.just("a", "b", "c").delayElements(Duration.ofMillis(10)), Flux.just("1", "2", "3"));
     }
+    
+    static Flux<String> switchOnNext() {
+        return Flux.switchOnNext(Flux.just(
+                Flux.just("a", "b", "c").delayElements(Duration.ofMillis(2)),
+                Flux.just("1", "2", "3"),
+                Flux.just("!", "@", "#")));
+    }
 }

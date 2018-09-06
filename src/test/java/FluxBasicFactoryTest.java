@@ -135,4 +135,17 @@ public class FluxBasicFactoryTest {
                 .expectNext("c")
                 .verifyComplete();
     }
+    
+    @Test
+    public void switchOnNext() {
+        StepVerifier.create(FluxBasicFactory.switchOnNext())
+                .expectSubscription()
+                .expectNext("1")
+                .expectNext("2")
+                .expectNext("3")
+                .expectNext("!")
+                .expectNext("@")
+                .expectNext("#")
+                .verifyComplete();
+    }
 }
