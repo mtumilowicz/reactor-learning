@@ -44,4 +44,8 @@ class FluxBasicFactory {
                     return state + 1;
                 });
     }
+    
+    static Flux<String> combineLatest() {
+        return Flux.combineLatest(Flux.just("a", "b", "c"), Flux.just("1", "2", "3"), (letter, number) -> letter + number);
+    }
 }

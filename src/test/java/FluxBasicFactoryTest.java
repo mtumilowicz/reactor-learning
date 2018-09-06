@@ -74,4 +74,14 @@ public class FluxBasicFactoryTest {
                 .expectNextCount(11)
                 .verifyComplete();
     }
+    
+    @Test
+    public void combineLatest() {
+        StepVerifier.create(FluxBasicFactory.combineLatest())
+                .expectSubscription()
+                .expectNext("c1")
+                .expectNext("c2")
+                .expectNext("c3")
+                .verifyComplete();
+    }
 }
