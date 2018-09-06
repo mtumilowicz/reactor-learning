@@ -43,7 +43,7 @@ class FluxBasicFunctions {
     static Flux<Tuple2<Integer, Integer>> zip() {
         Flux<Integer> first = Flux.range(1, 5);
         Flux<Integer> second = Flux.range(6, 5);
-
+        
         return Flux.zip(first, second);
     }
 
@@ -60,10 +60,5 @@ class FluxBasicFunctions {
         }
         
         return i;
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-
-        Thread.sleep(2100);
     }
 }
