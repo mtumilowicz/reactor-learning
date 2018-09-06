@@ -1,7 +1,12 @@
 import org.junit.Test;
+import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by mtumilowicz on 2018-09-01.
@@ -96,5 +101,25 @@ public class FluxBasicFactoryTest {
                 .expectNext("2")
                 .expectNext("3")
                 .verifyComplete();
+    }
+
+    @Test
+    public void defer() {
+        AtomicInteger i1 = new AtomicInteger();
+
+        Flux<Integer> source = Flux.just(i1.incrementAndGet());
+
+        assertThat(source.blockLast(), is(1));
+        assertThat(source.blockLast(), is(1));
+        assertThat(source.blockLast(), is(1));
+
+        AtomicInteger i2 = new AtomicInteger();
+        
+        Flux<Integer> deferred =
+                Flux.defer(() -> Flux.just(i2.incrementAndGet()));
+
+        assertThat(deferred.blockLast(), is(1));
+        assertThat(deferred.blockLast(), is(2));
+        assertThat(deferred.blockLast(), is(3));
     }
 }
