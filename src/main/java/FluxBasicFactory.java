@@ -53,7 +53,7 @@ class FluxBasicFactory {
         return Flux.concat(Flux.just("a", "b", "c"), Flux.just("1", "2", "3"));
     }
 
-    static Flux<Integer> defer() {
-        return Flux.defer(() -> Flux.range(1, 10));
+    static Flux<String> merge() {
+        return Flux.merge(Flux.just("a", "b", "c").delayElements(Duration.ofMillis(10)), Flux.just("1", "2", "3"));
     }
 }

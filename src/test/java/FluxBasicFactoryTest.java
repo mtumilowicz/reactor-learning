@@ -122,4 +122,17 @@ public class FluxBasicFactoryTest {
         assertThat(deferred.blockLast(), is(2));
         assertThat(deferred.blockLast(), is(3));
     }
+
+    @Test
+    public void merge() {
+        StepVerifier.create(FluxBasicFactory.merge())
+                .expectSubscription()
+                .expectNext("1")
+                .expectNext("2")
+                .expectNext("3")
+                .expectNext("a")
+                .expectNext("b")
+                .expectNext("c")
+                .verifyComplete();
+    }
 }
