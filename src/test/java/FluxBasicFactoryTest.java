@@ -84,4 +84,17 @@ public class FluxBasicFactoryTest {
                 .expectNext("c3")
                 .verifyComplete();
     }
+
+    @Test
+    public void concat() {
+        StepVerifier.create(FluxBasicFactory.concat())
+                .expectSubscription()
+                .expectNext("a")
+                .expectNext("b")
+                .expectNext("c")
+                .expectNext("1")
+                .expectNext("2")
+                .expectNext("3")
+                .verifyComplete();
+    }
 }
