@@ -2,6 +2,8 @@ import org.junit.Test;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuples;
 
+import java.util.Arrays;
+
 /**
  * Created by mtumilowicz on 2018-09-02.
  */
@@ -87,6 +89,14 @@ public class FluxBasicFunctionsTest {
                 .expectNext(Tuples.of(3 ,8))
                 .expectNext(Tuples.of(4 ,9))
                 .expectNext(Tuples.of(5 ,10))
+                .verifyComplete();
+    }
+    
+    @Test
+    public void buffer() {
+        StepVerifier.create(FluxBasicFunctions.buffer())
+                .expectNext(Arrays.asList(1, 2, 3, 4, 5))
+                .expectNext(Arrays.asList(6, 7, 8, 9, 10))
                 .verifyComplete();
     }
 }

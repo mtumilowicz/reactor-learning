@@ -1,6 +1,8 @@
 import reactor.core.publisher.Flux;
 import reactor.util.function.Tuple2;
 
+import java.util.List;
+
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -45,6 +47,11 @@ class FluxBasicFunctions {
         Flux<Integer> second = Flux.range(6, 5);
         
         return Flux.zip(first, second);
+    }
+    
+    static Flux<List<Integer>> buffer() {
+        return Flux.range(1, 10)
+                .buffer(5);
     }
 
     private static int doSomethingDangerous(int i) {
