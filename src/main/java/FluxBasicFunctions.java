@@ -17,7 +17,7 @@ class FluxBasicFunctions {
                     if (nonNull(transformed)) sink.next(i);
                 });
     }
-    
+
     static Flux<Integer> onErrorReturn() {
         return Flux.range(1, 5)
                 .map(FluxBasicFunctions::doSomethingDangerous)
@@ -29,29 +29,34 @@ class FluxBasicFunctions {
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .onErrorResume(err -> Flux.range(3, 3));
     }
-    
+
     static Flux<Integer> onErrorMap() {
         return Flux.range(1, 5)
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .onErrorMap(err -> new BusinessException(err.getLocalizedMessage()));
     }
-    
+
     static Flux<Integer> retry() {
         return Flux.range(0, 5)
                 .map(FluxBasicFunctions::doSomethingDangerous)
                 .retry(1);
     }
-    
+
     static Flux<Tuple2<Integer, Integer>> zip() {
         Flux<Integer> first = Flux.range(1, 5);
         Flux<Integer> second = Flux.range(6, 5);
-        
+
         return Flux.zip(first, second);
     }
-    
+
     static Flux<List<Integer>> buffer() {
         return Flux.range(1, 10)
                 .buffer(5);
+    }
+
+    static Flux<Flux<Integer>> window() {
+        return Flux.range(1, 10)
+                .window(5);
     }
 
     private static int doSomethingDangerous(int i) {
@@ -60,12 +65,12 @@ class FluxBasicFunctions {
         }
         return i;
     }
-    
+
     private static Integer transform(Integer i) {
         if (isNull(i) || i % 2 == 0) {
             return null;
         }
-        
+
         return i;
     }
 }

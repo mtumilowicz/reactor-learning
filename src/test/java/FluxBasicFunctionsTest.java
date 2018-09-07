@@ -1,8 +1,12 @@
 import org.junit.Test;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuples;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by mtumilowicz on 2018-09-02.
@@ -98,5 +102,17 @@ public class FluxBasicFunctionsTest {
                 .expectNext(Arrays.asList(1, 2, 3, 4, 5))
                 .expectNext(Arrays.asList(6, 7, 8, 9, 10))
                 .verifyComplete();
+    }
+    
+    @Test
+    public void test() {
+        Mono<List<Flux<Integer>>> collect = Flux.range(1, 10)
+                .window(5)
+                .collect(Collectors.toList());
+
+        List<Flux<Integer>> block = collect.block();
+        
+        block.get(0).log().blockLast();
+        block.get(1).log().blockLast();
     }
 }
