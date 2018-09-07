@@ -106,8 +106,7 @@ public class FluxBasicFunctionsTest {
     
     @Test
     public void test() {
-        Mono<List<Flux<Integer>>> collect = Flux.range(1, 10)
-                .window(5)
+        Mono<List<Flux<Integer>>> collect = FluxBasicFunctions.window()
                 .collect(Collectors.toList());
 
         List<Flux<Integer>> block = collect.block();
