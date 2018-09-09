@@ -58,3 +58,35 @@ measure.
 Because it changes how your code consumes the conveyed items. If you are 
 not subscribed to a hot observable, you won’t receive the data, and this 
 data is lost.
+
+# Reactor API
+* **Mono**
+    * static
+        * `Mono<T> error(Throwable error)` - Create a Mono that terminates 
+        with the specified error immediately after being subscribed to. 
+        `MonoBasicFactory.error()`
+        * `Mono<T> just(T data)` - Create a new Mono that emits the 
+        specified item, which is captured at instantiation time. 
+        `MonoBasicFactory.just_notNull()`
+        * `Mono<T> justOrEmpty(@Nullable Optional<? extends T> data)`,
+         `Mono<T> justOrEmpty(@Nullable T data)` - Create a new Mono that 
+         emits the specified item if non null / `Optional.isPresent()`
+         otherwise only emits onComplete.
+         `MonoBasicFactory.justOrEmpty_optional_notNull()`
+        * `Mono<Long> delay(Duration duration)` - Create a Mono which delays 
+        an onNext signal by a given duration on a default Scheduler and completes.
+        * `Mono<T> empty()` - Create a Mono that completes without emitting any item. 
+        `MonoBasicFactory.empty()`
+        * `Mono<T> first(Mono<? extends T>... monos)` - Pick the first Mono to 
+        emit any signal (value, empty completion or error) and replay that signal, 
+        effectively behaving like the fastest of these competing sources. 
+        `MonoBasicFactory.first()`
+        * `Mono<T> never()` - Create a Mono that will never signal any data, 
+        error or completion signal. `MonoBasicFactory.never()`
+        * `Mono<Tuple2<T1, T2>> zip(Mono<? extends T1> p1, Mono<? extends T2> p2)` -
+        Merge given monos into a new Mono that will be fulfilled when all of the given 
+        Monos have produced an item, aggregating their values into a Tuple2.
+    * instance
+* **Flux**
+
+# remarks
