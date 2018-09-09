@@ -87,6 +87,28 @@ data is lost.
         Merge given monos into a new Mono that will be fulfilled when all of the given 
         Monos have produced an item, aggregating their values into a Tuple2.
     * instance
+        * delayElements
+        * subscribe
+        * map
+        * block
+        * compose
+        * concatWith
+        * defaultIfEmpty
+        * elapsed
+        * zipWith
+        * then
+        * retry
+        * doOnNext
+        * doOnCancel
+        * doOnEach
+        * doOnError
+        * doOnRequest
+        * doOnSubscribe
+        * doOnSuccess
+        * error
+        * log
 * **Flux**
+    * static
+    * instance
 
 # remarks
