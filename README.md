@@ -118,8 +118,39 @@ data is lost.
         * doOnSuccess
         * `Mono<T> log()` - 
         Observe all Reactive Streams signals and trace them using Logger support.
+        * `Mono<R> handle(BiConsumer<? super T, SynchronousSink<R>> handler)` - 
+        Handle the items emitted by this Mono by calling a biconsumer with the 
+        output sink for each onNext. At most one SynchronousSink.next(Object) 
+        call must be performed and/or 0 or 1 SynchronousSink.error(Throwable) 
+        or SynchronousSink.complete().
 * **Flux**
     * static
+        * range
+        * from
+        * fromIterable
+        * fromArray
+        * fromStream
+        * interval
+        * fromIterable
+        * combineLatest
+        * concat
+        * create
+        * defer
+        * generate
+        * merge
+        * switchOnNext
     * instance
+        * blockLast
+        * collect
+        * window
+        * buffer
+        * concatMap
+        * take
+        * skip
+        * distinct
+        * filter
+        * reduce
+        * groupBy
+        * collectMap
 
 # remarks
