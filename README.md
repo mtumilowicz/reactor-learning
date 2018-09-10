@@ -2,6 +2,8 @@
 
 _Reference_: http://projectreactor.io/docs/core/release/reference/  
 _Reference_: https://www.youtube.com/watch?v=Cj4foJzPF80
+_Reference_: https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html
+_Reference_: https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html
 
 # preface
 **Reactive programming** is a declarative programming paradigm concerned 
@@ -64,49 +66,58 @@ data is lost.
     * static
         * `Mono<T> error(Throwable error)` - Create a Mono that terminates 
         with the specified error immediately after being subscribed to. 
-        `MonoBasicFactory.error()`
         * `Mono<T> just(T data)` - Create a new Mono that emits the 
         specified item, which is captured at instantiation time. 
-        `MonoBasicFactory.just_notNull()`
         * `Mono<T> justOrEmpty(@Nullable Optional<? extends T> data)`,
          `Mono<T> justOrEmpty(@Nullable T data)` - Create a new Mono that 
          emits the specified item if non null / `Optional.isPresent()`
          otherwise only emits onComplete.
-         `MonoBasicFactory.justOrEmpty_optional_notNull()`
         * `Mono<Long> delay(Duration duration)` - Create a Mono which delays 
         an onNext signal by a given duration on a default Scheduler and completes.
         * `Mono<T> empty()` - Create a Mono that completes without emitting any item. 
-        `MonoBasicFactory.empty()`
         * `Mono<T> first(Mono<? extends T>... monos)` - Pick the first Mono to 
         emit any signal (value, empty completion or error) and replay that signal, 
         effectively behaving like the fastest of these competing sources. 
-        `MonoBasicFactory.first()`
         * `Mono<T> never()` - Create a Mono that will never signal any data, 
-        error or completion signal. `MonoBasicFactory.never()`
+        error or completion signal.
         * `Mono<Tuple2<T1, T2>> zip(Mono<? extends T1> p1, Mono<? extends T2> p2)` -
         Merge given monos into a new Mono that will be fulfilled when all of the given 
         Monos have produced an item, aggregating their values into a Tuple2.
     * instance
-        * delayElements
-        * subscribe
-        * map
-        * block
-        * compose
-        * concatWith
-        * defaultIfEmpty
-        * elapsed
-        * zipWith
-        * then
-        * retry
-        * doOnNext
+        * `Mono<T> delayElement(Duration delay)` - Delay this Mono element 
+        (Subscriber.onNext(T) signal) by a given duration.
+        * `Disposable subscribe(Consumer<? super T> consumer)` -
+         Subscribe a Consumer to this Mono that will consume all the sequence.
+        * `Mono<R> map(Function<? super T, ? extends R> mapper)` - 
+        Transform the item emitted by this Mono by applying a synchronous function to it.
+        * `T block()` - 
+        Subscribe to this Mono and block indefinitely until a next signal is received.
+        * `Mono<V> compose(Function<? super Mono<T>, ? extends Publisher<V>> transformer)` -
+        Defer the given transformation to this Mono in order to generate a target Mono type.
+        * `Flux<T> concatWith(Publisher<? extends T> other)` -
+        Concatenate emissions of this Mono with the provided Publisher (no interleave).
+        * `Mono<T> defaultIfEmpty(T defaultV)` -
+        Provide a default single value if this mono is completed without any data
+        * `Mono<Tuple2<Long,T>> elapsed()` -
+        Map this Mono into Tuple2<Long, T> of timemillis and source data. 
+        The timemillis corresponds to the elapsed time between the subscribe 
+        and the first next signal, as measured by the parallel scheduler.
+        * `Mono<Tuple2<T, T2>> zipWith(Mono<? extends T2> other)` -
+        Combine the result from this mono and another into a Tuple2.
+        * `Mono<V> then(Mono<V> other)` - 
+        Let this Mono complete then play another Mono.
+        * `Mono<T> retry()` -
+        Re-subscribes to this Mono sequence if it signals any error, indefinitely.
+        * `Mono<T> doOnNext(Consumer<? super T> onNext)` -
+        Add behavior triggered when the Mono emits a data successfully.
         * doOnCancel
         * doOnEach
         * doOnError
         * doOnRequest
         * doOnSubscribe
         * doOnSuccess
-        * error
-        * log
+        * `Mono<T> log()` - 
+        Observe all Reactive Streams signals and trace them using Logger support.
 * **Flux**
     * static
     * instance
