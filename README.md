@@ -160,4 +160,38 @@ data is lost.
         * groupBy
         * collectMap
 
+# project description
+* `BaseSubscriberRequestOneTest`
+    * subscribe
+    * error
+    * cancel
+* `ConnectableFluxTest`
+    * subscribing to `ConnectableFlux` (with / without `autoConnect`)
+* `FluxBasicFactoryTest`
+    * empty
+    * never
+    * just
+    * fromIterable
+    * error
+    * interval by 100 ms
+    * interval by 1s (with virtual time simulation)
+    * generate
+    * combineLatest
+    * concat
+    * defer
+    * merge
+    * switchOnNext
+* `FluxBasicFunctionsTest`
+    * handle
+    * onErrorReturn
+    * onErrorResume
+    * onErrorMap
+    * retry
+    * zip
+    * buffer
+    * window
+* `FluxGroupByTest`
+    * grouping finite streams
+    * grouping finite streams with flatten
+    * grouping infinite streams with flatten
 # remarks
