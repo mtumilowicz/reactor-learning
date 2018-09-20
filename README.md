@@ -194,4 +194,27 @@ data is lost.
     * grouping finite streams
     * grouping finite streams with flatten
     * grouping infinite streams with flatten
+* `FluxSchedulersTest`
+    * default (parallel)
+    * elastic
+    * single
+    * newSingle
+    * publishOn
+    * subscribeOn
+* `HotVsColdTest`
+    * creating hot flux by publishing on `UnicastProcessor`
+* `MonoBasicFactoryTest`
+    * empty
+    * never
+    * just
+    * justOrEmpty
+    * error
+    * first
+* `SubscribeToFluxTest`
+    * subscribing with consumer
+    * subscribing with `BaseSubscriber` (reactor class inheritance)
+    * subscribing with consumer of error
+    * subscribing with consumer of complete
+    * subscribing with subscription consumer (requests for elements)
+* `SubscribeToMonoTest`
 # remarks
