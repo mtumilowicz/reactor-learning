@@ -216,5 +216,9 @@ data is lost.
     * subscribing with consumer of error
     * subscribing with consumer of complete
     * subscribing with subscription consumer (requests for elements)
-* `SubscribeToMonoTest`
+* `SubscribeToMonoTest` - same as above
+* `TransformVsComposeTest`
+    * transform (bounded before subscription)
+    * compose (bounded just in time)
+    
 # remarks
