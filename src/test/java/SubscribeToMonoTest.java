@@ -14,7 +14,7 @@ public class SubscribeToMonoTest {
     }
 
     @Test
-    public void subscribe_coreSubscriber() throws InterruptedException {
+    public void subscribe_baseSubscriber() throws InterruptedException {
         Mono.just(1)
                 .subscribe(new BaseSubscriberRequestOne());
 
