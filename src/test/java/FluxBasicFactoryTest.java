@@ -76,7 +76,8 @@ public class FluxBasicFactoryTest {
     public void generate() {
         StepVerifier.create(FluxBasicFactory.generate())
                 .expectSubscription()
-                .expectNextCount(11)
+                .expectNext(0, 3, 6, 9)
+                .expectNextCount(7)
                 .verifyComplete();
     }
     

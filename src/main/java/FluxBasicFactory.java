@@ -39,9 +39,9 @@ class FluxBasicFactory {
         return Flux.generate(
                 () -> 0,
                 (state, sink) -> {
-                    sink.next(3 * state);
+                    sink.next(3 * state); // new signal
                     if (state == 10) sink.complete();
-                    return state + 1;
+                    return state + 1; // new state
                 });
     }
     

@@ -31,7 +31,7 @@ public class FluxGroupByTest {
     }
 
     @Test
-    public void groupBy_withFlat_infinite() throws InterruptedException {
+    public void groupBy_withFlat_infinite() {
         Flux<Integer> generate = Flux.generate(() -> 0,
                 (state, sink) -> {
                     sink.next(state + 1);
@@ -46,7 +46,5 @@ public class FluxGroupByTest {
                         .map(String::valueOf) //map to string
                         .startWith("key = " + g.key()))
                 .subscribe(System.out::println);
-
-        Thread.sleep(1000);
     }
 }
