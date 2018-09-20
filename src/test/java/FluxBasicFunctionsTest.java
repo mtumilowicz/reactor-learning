@@ -105,7 +105,7 @@ public class FluxBasicFunctionsTest {
     }
     
     @Test
-    public void test() {
+    public void window() {
         Mono<List<Flux<Integer>>> collect = FluxBasicFunctions.window()
                 .collect(Collectors.toList());
 
