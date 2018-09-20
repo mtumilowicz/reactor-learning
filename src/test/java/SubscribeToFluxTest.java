@@ -14,7 +14,7 @@ public class SubscribeToFluxTest {
     }
 
     @Test
-    public void subscribe_coreSubscriber() throws InterruptedException {
+    public void subscribe_baseSubscriber() throws InterruptedException {
         Flux.range(1, 5)
                 .subscribe(new BaseSubscriberRequestOne());
 
