@@ -3,6 +3,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -14,14 +15,22 @@ public class MonoBasicFactoryTest {
 
     @Test
     public void empty() {
-        StepVerifier.create(MonoBasicFactory.empty())
+//        given
+        Mono<String> emptyMono = Mono.empty();
+
+//        expect
+        StepVerifier.create(emptyMono)
                 .expectSubscription()
                 .verifyComplete();
     }
 
     @Test
     public void never() {
-        StepVerifier.create(MonoBasicFactory.never())
+//        given
+        Mono<String> neverMono = Mono.never();
+        
+//        expect
+        StepVerifier.create(neverMono)
                 .expectSubscription()
                 .expectNoEvent(Duration.ofSeconds(1))
                 .thenCancel()
@@ -30,12 +39,16 @@ public class MonoBasicFactoryTest {
 
     @Test(expected = NullPointerException.class)
     public void just_null() {
-        MonoBasicFactory.just_null();
+        Mono.just(null);
     }
 
     @Test
     public void just_notNull() {
-        StepVerifier.create(MonoBasicFactory.just_notNull())
+//        given
+        Mono<String> justMono = Mono.just("bar");
+        
+//        when
+        StepVerifier.create(justMono)
                 .expectSubscription()
                 .expectNext("bar")
                 .verifyComplete();
@@ -43,17 +56,21 @@ public class MonoBasicFactoryTest {
 
     @Test
     public void justOrEmpty_null() {
-        assertThat(MonoBasicFactory.justOrEmpty_null(), is(Mono.empty()));
+        assertThat(Mono.justOrEmpty(null), is(Mono.empty()));
     }
 
     @Test
-    public void justOrEmpty_optional_null() {
-        assertThat(MonoBasicFactory.justOrEmpty_optional_null(), is(Mono.empty()));
+    public void justOrEmpty_optional_empty() {
+        assertThat(Mono.justOrEmpty(Optional.empty()), is(Mono.empty()));
     }
 
     @Test
     public void justOrEmpty_optional_notNull() {
-        StepVerifier.create(MonoBasicFactory.justOrEmpty_optional_notNull())
+//        given
+        Mono<String> justOrEmptyMono = Mono.justOrEmpty(Optional.of("bar"));
+        
+//        when
+        StepVerifier.create(justOrEmptyMono)
                 .expectSubscription()
                 .expectNext("bar")
                 .verifyComplete();
@@ -61,14 +78,22 @@ public class MonoBasicFactoryTest {
 
     @Test
     public void error() {
-        StepVerifier.create(MonoBasicFactory.error())
+//        given
+        Mono<Object> errorMono = Mono.error(new IllegalStateException());
+        
+//        expect
+        StepVerifier.create(errorMono)
                 .expectError(IllegalStateException.class)
                 .verify();
     }
     
     @Test
     public void first() {
-        StepVerifier.create(MonoBasicFactory.first())
+//        given
+        Mono<String> firstMono = Mono.first(Mono.just("slower").delayElement(Duration.ofSeconds(1)), Mono.just("faster"));
+        
+//        expect
+        StepVerifier.create(firstMono)
                 .expectSubscription()
                 .expectNext("faster")
                 .verifyComplete();
