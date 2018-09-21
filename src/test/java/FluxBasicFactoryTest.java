@@ -16,7 +16,9 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void empty() {
+//        given
         Flux<String> emptyFlux = Flux.empty();
+//        expect
         StepVerifier.create(emptyFlux)
                 .expectSubscription()
                 .verifyComplete();
@@ -24,7 +26,9 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void never() {
+//        given
         Flux<String> neverFlux = Flux.never();
+//        expect
         StepVerifier.create(neverFlux)
                 .expectSubscription()
                 .expectNoEvent(Duration.ofSeconds(1))
@@ -34,7 +38,9 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void just() {
+//        given
         Flux<String> justFlux = Flux.just("foo", "bar");
+//        expect
         StepVerifier.create(justFlux)
                 .expectSubscription()
                 .expectNext("foo")
@@ -44,7 +50,9 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void fromIterable() {
+//        given
         Flux<String> iterableFlux = Flux.fromIterable(Arrays.asList("foo", "bar"));
+//        expect
         StepVerifier.create(iterableFlux)
                 .expectSubscription()
                 .expectNext("foo")
@@ -54,7 +62,9 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void error() {
+//        given
         Flux<Object> errorFlux = Flux.error(new IllegalStateException());
+//        expect
         StepVerifier.create(errorFlux)
                 .expectSubscription()
                 .expectError(IllegalStateException.class)
@@ -63,7 +73,9 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void interval_by100ms_countFrom0To9() {
+//        given
         Flux<Long> intervalFlux = Flux.interval(Duration.ofMillis(100)).take(10);
+//        expect
         StepVerifier.create(intervalFlux)
                 .expectSubscription()
                 .expectNext(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L)
@@ -72,6 +84,7 @@ public class FluxBasicFactoryTest {
     
     @Test
     public void interval_by1s_countFrom10To19() {
+//        expect
         StepVerifier.withVirtualTime(FluxBasicFactory::interval_by1s_countFrom10To19)
                 .expectSubscription()
                 .thenAwait(Duration.ofSeconds(20))
@@ -81,13 +94,15 @@ public class FluxBasicFactoryTest {
     
     @Test
     public void generate() {
-        Flux<Object> generateFlux = Flux.generate(
+//        given
+        Flux<Integer> generateFlux = Flux.generate(
                 () -> 0,
                 (state, sink) -> {
                     sink.next(3 * state); // new signal
                     if (state == 10) sink.complete();
                     return state + 1; // new state
                 });
+//        expect
         StepVerifier.create(generateFlux)
                 .expectSubscription()
                 .expectNext(0, 3, 6, 9)
@@ -97,9 +112,11 @@ public class FluxBasicFactoryTest {
     
     @Test
     public void combineLatest() {
+//        given
         Flux<String> combineLatestFlux = Flux.combineLatest(Flux.just("a", "b", "c"),
                 Flux.just("1", "2", "3"),
                 (letter, number) -> letter + number);
+//        expect
         StepVerifier.create(combineLatestFlux)
                 .expectSubscription()
                 .expectNext("c1")
@@ -110,7 +127,9 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void concat() {
+//        given
         Flux<String> concatFlux = Flux.concat(Flux.just("a", "b", "c"), Flux.just("1", "2", "3"));
+//        expect
         StepVerifier.create(concatFlux)
                 .expectSubscription()
                 .expectNext("a")
@@ -144,9 +163,11 @@ public class FluxBasicFactoryTest {
 
     @Test
     public void merge() {
+//        given
         Flux<String> mergeFlux = Flux.merge(
                 Flux.just("a", "b", "c").delayElements(Duration.ofMillis(10)), 
                 Flux.just("1", "2", "3"));
+//        expect
         StepVerifier.create(mergeFlux)
                 .expectSubscription()
                 .expectNext("1")
@@ -160,10 +181,12 @@ public class FluxBasicFactoryTest {
     
     @Test
     public void switchOnNext() {
+//        given
         Flux<String> switchOnNextFlux = Flux.switchOnNext(Flux.just(
                 Flux.just("a", "b", "c").delayElements(Duration.ofMillis(2)),
                 Flux.just("1", "2", "3"),
                 Flux.just("!", "@", "#")));
+//        expect
         StepVerifier.create(switchOnNextFlux)
                 .expectSubscription()
                 .expectNext("1")
