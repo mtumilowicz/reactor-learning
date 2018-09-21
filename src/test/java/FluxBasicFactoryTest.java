@@ -18,6 +18,7 @@ public class FluxBasicFactoryTest {
     public void empty() {
 //        given
         Flux<String> emptyFlux = Flux.empty();
+        
 //        expect
         StepVerifier.create(emptyFlux)
                 .expectSubscription()
@@ -28,6 +29,7 @@ public class FluxBasicFactoryTest {
     public void never() {
 //        given
         Flux<String> neverFlux = Flux.never();
+        
 //        expect
         StepVerifier.create(neverFlux)
                 .expectSubscription()
@@ -40,6 +42,7 @@ public class FluxBasicFactoryTest {
     public void just() {
 //        given
         Flux<String> justFlux = Flux.just("foo", "bar");
+        
 //        expect
         StepVerifier.create(justFlux)
                 .expectSubscription()
@@ -52,6 +55,7 @@ public class FluxBasicFactoryTest {
     public void fromIterable() {
 //        given
         Flux<String> iterableFlux = Flux.fromIterable(Arrays.asList("foo", "bar"));
+        
 //        expect
         StepVerifier.create(iterableFlux)
                 .expectSubscription()
@@ -64,6 +68,7 @@ public class FluxBasicFactoryTest {
     public void error() {
 //        given
         Flux<Object> errorFlux = Flux.error(new IllegalStateException());
+        
 //        expect
         StepVerifier.create(errorFlux)
                 .expectSubscription()
@@ -75,6 +80,7 @@ public class FluxBasicFactoryTest {
     public void interval_by100ms_countFrom0To9() {
 //        given
         Flux<Long> intervalFlux = Flux.interval(Duration.ofMillis(100)).take(10);
+        
 //        expect
         StepVerifier.create(intervalFlux)
                 .expectSubscription()
@@ -102,6 +108,7 @@ public class FluxBasicFactoryTest {
                     if (state == 10) sink.complete();
                     return state + 1; // new state
                 });
+        
 //        expect
         StepVerifier.create(generateFlux)
                 .expectSubscription()
@@ -116,6 +123,7 @@ public class FluxBasicFactoryTest {
         Flux<String> combineLatestFlux = Flux.combineLatest(Flux.just("a", "b", "c"),
                 Flux.just("1", "2", "3"),
                 (letter, number) -> letter + number);
+        
 //        expect
         StepVerifier.create(combineLatestFlux)
                 .expectSubscription()
@@ -129,6 +137,7 @@ public class FluxBasicFactoryTest {
     public void concat() {
 //        given
         Flux<String> concatFlux = Flux.concat(Flux.just("a", "b", "c"), Flux.just("1", "2", "3"));
+        
 //        expect
         StepVerifier.create(concatFlux)
                 .expectSubscription()
@@ -167,6 +176,7 @@ public class FluxBasicFactoryTest {
         Flux<String> mergeFlux = Flux.merge(
                 Flux.just("a", "b", "c").delayElements(Duration.ofMillis(10)), 
                 Flux.just("1", "2", "3"));
+        
 //        expect
         StepVerifier.create(mergeFlux)
                 .expectSubscription()
@@ -186,6 +196,7 @@ public class FluxBasicFactoryTest {
                 Flux.just("a", "b", "c").delayElements(Duration.ofMillis(2)),
                 Flux.just("1", "2", "3"),
                 Flux.just("!", "@", "#")));
+        
 //        expect
         StepVerifier.create(switchOnNextFlux)
                 .expectSubscription()
