@@ -153,18 +153,32 @@ data is lost.
         Creates a Flux that mirrors the most recently emitted Publisher, forwarding its data until a new Publisher 
         comes in in the source.
     * instance
-        * blockLast
-        * collect
-        * window
-        * buffer
-        * concatMap
-        * take
-        * skip
-        * distinct
-        * filter
-        * reduce
-        * groupBy
-        * collectMap
+        * `T blockLast()` - Subscribe to this Flux and block indefinitely until the upstream signals its last value or 
+        completes.
+        * `Mono<R> collect(Collector<? super T,A,? extends R> collector)` -
+        Collect all elements emitted by this Flux into a container, by applying a Java 8 Stream API Collector The 
+        collected result will be emitted when this sequence completes.
+        * `Flux<Flux<T>> window(int maxSize)` - Split this Flux sequence into multiple Flux windows containing maxSize 
+        elements (or less for the final window) and starting from the first item.
+        * `Flux<List<T>> buffer(int maxSize)` - Collect incoming values into multiple List buffers that will be emitted 
+        by the returned Flux each time the given max size is reached or once this Flux completes.
+        * `Flux<V> concatMap(Function<? super T,? extends Publisher<? extends V>> mapper)` -
+        Transform the elements emitted by this Flux asynchronously into Publishers, then flatten these inner publishers 
+        into a single Flux, sequentially and preserving order using concatenation.
+        * `Flux<T> take(long n)` - Take only the first N values from this Flux, if available.
+        * `Flux<T> skip(long skipped)` - Skip the specified number of elements from the beginning of this Flux then 
+        emit the remaining elements.
+        * `Flux<T> distinct()` - For each Subscriber, track elements from this Flux that have been seen and filter 
+        out duplicates.
+        * `Flux<T> filter(Predicate<? super T> p)` - Evaluate each source value against the given Predicate.
+        * `Mono<A> reduce(A initial, BiFunction<A,? super T,A> accumulator)` - 
+        Reduce the values from this Flux sequence into an single object matching the type of a seed value.
+        * `Flux<GroupedFlux<K,T>> groupBy(Function<? super T,? extends K> keyMapper)` -
+        Divide this sequence into dynamically created Flux (or groups) for each unique key, as produced by the provided 
+        keyMapper Function.
+        * `Mono<Map<K,T>> collectMap(Function<? super T,? extends K> keyExtractor)` -
+        Collect all elements emitted by this Flux into a hashed Map that is emitted by the resulting Mono when this 
+        sequence completes.
 
 # project description
 * `BaseSubscriberRequestOneTest`
@@ -226,5 +240,3 @@ data is lost.
 * `TransformVsComposeTest`
     * transform (bounded before subscription)
     * compose (bounded just in time)
-    
-# remarks
